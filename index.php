@@ -1,20 +1,15 @@
 <?php
+function changerClass(string $classe)
+{
+    include $classe. '.php';   //on inclut la classe correspondante au paramètre passé.
+}
 
-include("Personnage.php");
+spl_autoload_register('changerClass');
 
-print("<h1>Jeu de combat</h1>");
+spl_autoload_register('changerClass');
 
-$perso1 = new Personnage("Bool");
-//$perso1->definirForce(20);
-$perso1->setExperience(15);
-
-$perso2 = new Personnage("Bile",60,0);
-//$perso2->definirForce(60);
-$perso2->setExperience(1);
-
-//Les personnages se frappe
-$perso1->frapper($perso2);
-$perso2->frapper($perso1);
-
-print("<br/>Dégats du joueur n°1 = ".$perso1->getDegats());
-print("<br/>Dégats du joueur n°2 = ".$perso2->getDegats());
+try {
+    $db= new PDO($dsn, $user, $password);
+    //$db->setAttribut
+}
+catch (\Trowable $th){
