@@ -27,12 +27,22 @@ Class Personnage {
     }   
     public function hydrate(array $ligne)
     {
+        foreach ($ligne as $key => $value)
+        {
+            $method = 'set'.ucfirst($key);
+            if (method_exists($this, $method))
+            {
+                $this->setNom($value);
+            }
+        }
+    }
+    public function hydrate2(array $ligne)
+    {
         $this->setNom($ligne['nom']);
         $this->setNiveau($ligne['niveau']);
         $this->setForce($ligne['force']);
         $this->setDegats($ligne['degats']);
         $this->setExperience(1);
-    
     }
     public function __toString():string
     {
@@ -40,7 +50,7 @@ Class Personnage {
     }
     public function setNiveau(int $niveau):Personnage
     {
-        if (!is_string($niveau))//s'il ne s'agit pas d'un texte
+        if (!is_int($niveau))//s'il ne s'agit pas d'un texte
         {
             trigger_error('Le niveau d\'un personnage doit être un entier',E_USER_ERROR);
             return $this;
