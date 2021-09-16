@@ -17,16 +17,22 @@ Class Personnage {
     const FORCE_GRANDE=80;
 
     private static $_textADire='La partie est démarré BASSSTONNN <br/>';
-    private static $_nbreJoueur=0;
+    private static $_nbreJoueurs=0;
     
-    public function __construct(string $nom,int $force=50,int $degats=0)
+    public function __construct(array $ligne)
     {
-        $this->setnom($nom);
-        $this->setforce( $force);
-        $this->setdegats($degats);
-        $this->setexperience(1);
-        self::$_nbreJoueur++;
-        print("<br/> Le personnage ".$nom." est créé.");
+        $this->hydrate($ligne);
+        self::$_nbreJoueurs++;
+        print("<br/> Le personnage ".$ligne['nom']." est créé.");
+    }   
+    public function hydrate(array $ligne)
+    {
+        $this->setNom($ligne['nom']);
+        $this->setNiveau($ligne['niveau']);
+        $this->setForce($ligne['force']);
+        $this->setDegats($ligne['degats']);
+        $this->setExperience(1);
+    
     }
     public function __toString():string
     {
@@ -36,7 +42,7 @@ Class Personnage {
     {
         if (!is_string($niveau))//s'il ne s'agit pas d'un texte
         {
-            trigger_error('Le nom d\'un personnage doit être un texte',E_USER_ERROR);
+            trigger_error('Le niveau d\'un personnage doit être un entier',E_USER_ERROR);
             return $this;
         }
         $this->_niveau=$niveau;
